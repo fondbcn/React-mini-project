@@ -4,7 +4,72 @@ import { Provider, connect } from 'react-redux'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import './App.css'
+import ReactMarkdown from "react-markdown";
 
+const defMark = `
+# Welcome to my React Markdown Previewer!
+
+## This is a sub-heading...
+### And here's some other cool stuff:
+
+Heres some code, \`<div></div>\`, between 2 backticks.
+
+\`\`\`
+// this is multi-line code:
+
+function anotherExample(firstLine, lastLine) {
+  if (firstLine == '\`\`\`' && lastLine == '\`\`\`') {
+    return multiLineCode;
+  }
+}
+\`\`\`
+
+You can also make text **bold**... whoa!
+Or _italic_.
+Or... **_both!_**
+
+There's also [links](https://www.freecodecamp.com), and
+> Block Quotes!
+
+- And of course there are lists.
+  - Some are bulleted.
+      - With different indentation levels.
+        - That look like this.
+`
+
+function App(){
+    const [mark,setMark]=useState(defMark)
+    return(
+      <>
+      <div className="d-block m-4 p-1">
+        <div className="d-flex justify-content-between">
+          <span>Should be font awesome</span>
+          <button>#</button>
+        </div>
+        <textarea name="editor" value={mark} onChange={(e)=>setMark(e.target.value)}>
+        </textarea>
+      </div>
+      <div className="text-start">
+        <ReactMarkdown>{mark}</ReactMarkdown>
+      </div>
+      </>
+    )
+}
+
+
+function Global(){
+    return(
+    //<Provider store={store}>
+        <div id="" className="d-flex flex-column justify-content-center">
+          <App/>
+        </div>
+    //</Provider>
+    )
+}
+
+export default Global; 
+//--------------------------------------------------
+/*
 //Redux
 const SET_BUTTON_CLICK = 'SET_BUTTON_CLICK';
 const setQuote = (quote,auth) => {
@@ -94,107 +159,4 @@ function Global() {
         </div>
       </Provider>
     );
-};
-
-export default Global; 
-
-
-
-
-//---------------------------------------------------------------------------------------------------------------
-/*
-// Redux:
-const ADD = 'ADD';
-
-const addMessage = (message) => {
-  return {
-    type: ADD,
-    message: message
-  }
-};
-
-const messageReducer = (state = [], action) => {
-  switch (action.type) {
-    case ADD:
-      return [
-        ...state,
-        action.message
-      ];
-    default:
-      return state;
-  }
-};
-
-const store = createStore(
-  messageReducer,
-  applyMiddleware(thunk)
-);
-
-// React:
-
-class Presentational extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      input: '',
-      messages: []
-    }
-    this.handleChange = this.handleChange.bind(this);
-    this.submitMessage = this.submitMessage.bind(this);
-  }
-  handleChange(event) {
-    this.setState({
-      input: event.target.value
-    });
-  }
-  submitMessage() {
-    this.setState((state) => ({
-      input: '',
-      messages: state.messages.concat(state.input)
-    }));
-  }
-  render() {
-    return (
-      <div>
-        <h2>Type in a new Message:</h2>
-        <input
-          value={this.state.input}
-          onChange={this.handleChange}/><br/>
-        <button className ="btn btn-primary mt-2" onClick={this.submitMessage}>Submit</button>
-        <ul>
-          {this.state.messages.map( (message, idx) => {
-              return (
-                 <li key={idx}>{message}</li>
-              )
-            })
-          }
-        </ul>
-      </div>
-    );
-  }
-};
-
-const mapStateToProps = (state) => {
-  return {messages: state}
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    submitNewMessage: (message) => {
-      dispatch(addMessage(message))
-    }
-  }
-};
-
-const Container = connect(mapStateToProps, mapDispatchToProps)(Presentational);
-
-class AppWrapper extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <Container/>
-      </Provider>
-    );
-  }
-};
-*/
+};*/
