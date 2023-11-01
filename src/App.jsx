@@ -39,17 +39,23 @@ There's also [links](https://www.freecodecamp.com), and
 
 function App(){
     const [mark,setMark]=useState(defMark)
+    const [isTextareaVisible, setTextareaVisible] = useState(true);
+    const toggleTextareaStyles = () => {
+      setTextareaVisible(!isTextareaVisible);
+    };
+    const textareaClassName = isTextareaVisible ? 'block' : 'none';
+    console.log(isTextareaVisible)
     return(
       <>
-      <div className="d-block m-4 p-1">
-        <div className="d-flex justify-content-between">
+      <div className="d-block m-4 p-1 div1">
+        <div className="d-flex justify-content-between ">
           <span>Should be font awesome</span>
-          <button>#</button>
+          <button className="btn btn-sm" onClick={toggleTextareaStyles}>#</button>
         </div>
-        <textarea name="editor" value={mark} onChange={(e)=>setMark(e.target.value)}>
+        <textarea id="editor" style={{display:textareaClassName}} name="editor" value={mark} onChange={(e)=>setMark(e.target.value)}>
         </textarea>
       </div>
-      <div className="text-start">
+      <div id="preview" className="text-start ps-3">
         <ReactMarkdown>{mark}</ReactMarkdown>
       </div>
       </>
